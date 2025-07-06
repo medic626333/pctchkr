@@ -176,15 +176,23 @@ def Tele(ccx):
 
     try:
         json_data = response.json()
+        print(f"DEBUG: JSON Response: {json_data}")  # Debug print
         if 'errors' in json_data:
             # Return the first error message as a string
             if isinstance(json_data['errors'], list) and len(json_data['errors']) > 0:
-                return json_data['errors'][0]
+                error_msg = json_data['errors'][0]
+                print(f"DEBUG: Returning error: {error_msg}")  # Debug print
+                return error_msg
             else:
-                return str(json_data['errors'])
+                error_msg = str(json_data['errors'])
+                print(f"DEBUG: Returning error: {error_msg}")  # Debug print
+                return error_msg
         else:
+            print("DEBUG: Returning succeeded")  # Debug print
             return "succeeded"
     except ValueError:
+        print(f"DEBUG: ValueError - {response.text}")  # Debug print
         return "❌ Invalid JSON Response"
     except Exception as e:
+        print(f"DEBUG: Exception - {str(e)}")  # Debug print
         return f"❌ Error: {str(e)}"
